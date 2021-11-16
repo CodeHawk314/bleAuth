@@ -1,0 +1,17 @@
+{
+  "name": "bleauth",
+  "version": "0.0.1",
+  "description": "Authenticate with phone in proximity via bluetooth low energy",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "author": "Elijah Kim",
+  "license": "ISC",
+  "dependencies": {
+    "@abandonware/bleno": "^0.5.1-4",
+    "@abandonware/bluetooth-hci-socket": "^0.5.3-7",
+    "rpi-gpio": "^2.1.7"
+  }
+}
