@@ -33,13 +33,16 @@ class PhoneKeyBLECharacteristic extends bleno.Characteristic {
   onSubscribe(maxValueSize, callback) {
     console.log('BLE characteristic subscribed')
 
-    shared.subscribedToCharacteristic = true
+//    shared.subscribedToCharacteristic = true
     this.valueDidChangeCallback = callback
   }
 
   onWriteRequest(data, offset, withoutResponse, callback) {
     console.log('write request')
-    console.log(data)
+    console.log(data.toString())
+    this.valueDidChangeCallback(Buffer.from("helloitsapizzaparty", 'utf8'))
+    var result = Characteristic.RESULT_SUCCESS;
+    callback(result);
   }
 
   onUnsubscribe() {

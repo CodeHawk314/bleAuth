@@ -1,6 +1,8 @@
 const bleno = require('@abandonware/bleno')
 const ble = require('./ble-module')
 
+require("./knock-sensor")
+
 console.log("starting...")
 
 const PhoneKeyBLEService = new ble.PhoneKeyBLEService

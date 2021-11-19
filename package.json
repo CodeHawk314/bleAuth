@@ -12,6 +12,7 @@
   "dependencies": {
     "@abandonware/bleno": "^0.5.1-4",
     "@abandonware/bluetooth-hci-socket": "^0.5.3-7",
+    "mcp-spi-adc": "^3.2.0",
     "rpi-gpio": "^2.1.7"
   }
 }
