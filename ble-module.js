@@ -1,5 +1,6 @@
 const { Characteristic } = require('@abandonware/bleno')
 const bleno = require('@abandonware/bleno')
+const jwt = require('jsonwebtoken');
 
 class PhoneKeyBLEService extends bleno.PrimaryService {
   constructor() {
@@ -9,6 +10,7 @@ class PhoneKeyBLEService extends bleno.PrimaryService {
     })
 
     this.valueDidChangeCallback = null
+    this.primaryCharacteristic = this.characteristics[0]
     console.log("service made")
   }
 }
@@ -20,6 +22,8 @@ class PhoneKeyBLECharacteristic extends bleno.Characteristic {
       uuid: "13ebbac0-73ab-43b5-bd1b-775ec77171ea",
       properties: ['read', 'notify', 'write']
     })
+    this.subscribed = false
+
     console.log("characteristic made")
   }
 
@@ -33,19 +37,24 @@ class PhoneKeyBLECharacteristic extends bleno.Characteristic {
   onSubscribe(maxValueSize, callback) {
     console.log('BLE characteristic subscribed')
 
-//    shared.subscribedToCharacteristic = true
+    this.subscribed = true
     this.valueDidChangeCallback = callback
   }
 
   onWriteRequest(data, offset, withoutResponse, callback) {
     console.log('write request')
-    console.log(data.toString())
-    this.valueDidChangeCallback(Buffer.from("helloitsapizzaparty", 'utf8'))
+    token = data.toString()
+    console.log(token)
+
+    let tokenPayload = jwt.verify(token, "supersecret")
+    console.log(tokenPayload)
+
     var result = Characteristic.RESULT_SUCCESS;
     callback(result);
   }
 
   onUnsubscribe() {
+    this.subscribed = false
     console.log('BLE characteristic unsubscribed')
   }
 

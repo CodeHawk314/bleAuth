@@ -1,7 +1,7 @@
 const bleno = require('@abandonware/bleno')
 const ble = require('./ble-module')
 
-require("./knock-sensor")
+const knockTrigger = require("./knock-sensor")
 
 console.log("starting...")
 
@@ -24,3 +24,15 @@ bleno.on('advertisingStart', function (error) {
     bleno.setServices([PhoneKeyBLEService])
   }
 })
+
+const onKnock = () => {
+  console.log("A KNOCK OCCURRED")
+  if (PhoneKeyBLEService.primaryCharacteristic.subscribed) {
+    console.log("yes it's subscribed")
+    PhoneKeyBLEService.primaryCharacteristic.valueDidChangeCallback(Buffer.from("auth request", 'utf8')) // notify
+  } else {
+    console.log("no way Jose")
+  }
+}
+
+knockTrigger(onKnock)
