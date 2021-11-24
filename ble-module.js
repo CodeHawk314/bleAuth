@@ -1,6 +1,6 @@
 const { Characteristic } = require('@abandonware/bleno')
 const bleno = require('@abandonware/bleno')
-const jwt = require('jsonwebtoken');
+const validateToken = require('./authenticate')
 
 class PhoneKeyBLEService extends bleno.PrimaryService {
   constructor() {
@@ -42,20 +42,17 @@ class PhoneKeyBLECharacteristic extends bleno.Characteristic {
   }
 
   onWriteRequest(data, offset, withoutResponse, callback) {
-    console.log('write request')
+    // console.log('write request')
     let token = data.toString()
-    console.log(token)
+    // console.log(token)
 
-    try {
-      let tokenPayload = jwt.verify(token, "supersecret")
-      console.log(tokenPayload)
-      if (tokenPayload.sub = "open") {
-        console.log("AUTHENTICATED. OPENING DOOR.")
+    bleno.updateRssi((error, rssi) => {
+      if (rssi > -70) {
+        validateToken(token)
+      } else {
+        console.log("phone too far away")
       }
-    }
-    catch {
-      console.log("invalid token")
-    }
+    })
 
     var result = Characteristic.RESULT_SUCCESS;
     callback(result);

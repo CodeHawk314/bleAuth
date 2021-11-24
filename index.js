@@ -25,6 +25,12 @@ bleno.on('advertisingStart', function (error) {
   }
 })
 
+// setInterval(() => {
+//   bleno.updateRssi(function (error, rssi) {
+//     console.log(rssi)
+//   })
+// }, 2000)
+
 const onKnock = () => {
   console.log("A KNOCK OCCURRED")
   if (PhoneKeyBLEService.primaryCharacteristic.subscribed) {
