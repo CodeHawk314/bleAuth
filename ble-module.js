@@ -43,11 +43,19 @@ class PhoneKeyBLECharacteristic extends bleno.Characteristic {
 
   onWriteRequest(data, offset, withoutResponse, callback) {
     console.log('write request')
-    token = data.toString()
+    let token = data.toString()
     console.log(token)
 
-    let tokenPayload = jwt.verify(token, "supersecret")
-    console.log(tokenPayload)
+    try {
+      let tokenPayload = jwt.verify(token, "supersecret")
+      console.log(tokenPayload)
+      if (tokenPayload.sub = "open") {
+        console.log("AUTHENTICATED. OPENING DOOR.")
+      }
+    }
+    catch {
+      console.log("invalid token")
+    }
 
     var result = Characteristic.RESULT_SUCCESS;
     callback(result);
