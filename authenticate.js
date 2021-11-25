@@ -16,7 +16,6 @@ const validateToken = (token) => {
       let tokenPayload = jwt.verify(token, key)
       // console.log(tokenPayload)
       if (tokenPayload.sub = "open") {
-        console.log("AUTHENTICATED. OPENING DOOR.")
         return true
       }
     }
