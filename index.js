@@ -1,5 +1,6 @@
 const bleno = require('@abandonware/bleno')
 const ble = require('./ble-module')
+require("./server")
 
 const knockTrigger = require("./knock-sensor")
 
@@ -24,12 +25,6 @@ bleno.on('advertisingStart', function (error) {
     bleno.setServices([PhoneKeyBLEService])
   }
 })
-
-// setInterval(() => {
-//   bleno.updateRssi(function (error, rssi) {
-//     console.log(rssi)
-//   })
-// }, 2000)
 
 const onKnock = () => {
   console.log("A KNOCK OCCURRED")

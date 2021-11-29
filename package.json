@@ -12,6 +12,8 @@
   "dependencies": {
     "@abandonware/bleno": "^0.5.1-4",
     "@abandonware/bluetooth-hci-socket": "^0.5.3-7",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
     "mcp-spi-adc": "^3.2.0",
     "rpi-gpio": "^2.1.7"

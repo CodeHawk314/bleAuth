@@ -47,7 +47,7 @@ class PhoneKeyBLECharacteristic extends bleno.Characteristic {
     // console.log(token)
 
     bleno.updateRssi((error, rssi) => {
-      if (rssi > -70) {
+      if (rssi > -72) {
         let validated = validateToken(token)
         if (validated) {
           console.log("AUTHENTICATED. OPENING DOOR.")
