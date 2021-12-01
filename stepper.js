@@ -1,11 +1,12 @@
 const Gpio = require('onoff').Gpio;
 
 class Stepper {
-  constructor(stepPin, dirPin, enabledPin) {
+  constructor(stepPin, dirPin, disablePin) {
     this.stepPin = new Gpio(stepPin, 'out');
     this.dirPin = new Gpio(dirPin, 'out');
-    this.enabledPin = new Gpio(enabledPin, 'out');
+    this.disablePin = new Gpio(disablePin, 'out');
     this.opening = false;
+    this.disablePin.writeSync(1);
   }
 
   sleep(ms) {
@@ -44,9 +45,12 @@ class Stepper {
   async openCloseDoor() {
     if (!this.opening) {
       this.opening = true;
+      this.disablePin.writeSync(0);
       this.turn(1100, 1);
       await this.sleep(3000);
       this.turn(1100, 0);
+      await this.sleep(1000);
+      this.disablePin.writeSync(1);
       this.opening = false;
     }
   }
