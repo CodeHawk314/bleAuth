@@ -4,7 +4,7 @@ const RingBuffer = require('./ringbuffer')
 const KNOCK_PATTERN = ".-..."
 
 // const VOLT_THRESHOLD = 0.009
-const VOLT_THRESHOLD = 0.02
+const VOLT_THRESHOLD = 0.005
 const VOLT_COOLDOWN = 150 // miliseconds
 const SHORT_KNOCK = 600 // between VOLT_COOLDOWN and 800 miliseconds
 const LONG_KNOCK = 2000 // between SHORT_KNOCK and 2000 miliseconds
@@ -43,7 +43,7 @@ const knockDetected = (callback) => {
 }
 
 const knockTrigger = (onKnockCallback) => {
-  const tempSensor = mcpadc.openMcp3008(1, { speedHz: 20000 }, err => {
+  const tempSensor = mcpadc.openMcp3008(2, { speedHz: 20000 }, err => {
     if (err) throw err;
 
     setInterval(_ => {
@@ -52,13 +52,14 @@ const knockTrigger = (onKnockCallback) => {
 
         let volts = reading.value * 3.3;
         if (volts > VOLT_THRESHOLD) {
-          console.log("volts: ", volts)
-          if (volts > lastVolts.max() + 0.005) {
+          // console.log("volts: ", volts)
+          if (volts > lastVolts.max() + 0.03) {
             let now = Date.now();
             // console.log("lastvolts max: ", lastVolts.max())
             // console.log("lastVolts: ", lastVolts.arr)
             if (now - lastAboveThreshold > VOLT_COOLDOWN) {
-              knockDetected(onKnockCallback);
+              // knockDetected(onKnockCallback);
+              onKnockCallback();
             }
             lastAboveThreshold = Date.now();
           }

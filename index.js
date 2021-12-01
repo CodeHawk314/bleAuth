@@ -1,7 +1,7 @@
 const bleno = require('@abandonware/bleno')
 const ble = require('./ble-module')
 require("./server")
-
+const stepper = require("./stepper")
 const knockTrigger = require("./knock-sensor")
 
 console.log("starting...")
@@ -37,3 +37,4 @@ const onKnock = () => {
 }
 
 knockTrigger(onKnock)
+// stepper.openCloseDoor();

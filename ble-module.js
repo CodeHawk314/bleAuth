@@ -1,5 +1,6 @@
 const { Characteristic } = require('@abandonware/bleno')
 const bleno = require('@abandonware/bleno')
+const stepper = require("./stepper")
 const validateToken = require('./authenticate')
 
 class PhoneKeyBLEService extends bleno.PrimaryService {
@@ -47,10 +48,11 @@ class PhoneKeyBLECharacteristic extends bleno.Characteristic {
     // console.log(token)
 
     bleno.updateRssi((error, rssi) => {
-      if (rssi > -72) {
+      if (rssi > -75) {
         let validated = validateToken(token)
         if (validated) {
           console.log("AUTHENTICATED. OPENING DOOR.")
+          stepper.openCloseDoor();
           this.valueDidChangeCallback(Buffer.from("unlocking", 'utf8'))
         } else {
           console.log("access denied")

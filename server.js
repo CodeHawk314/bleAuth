@@ -4,6 +4,7 @@ const cors = require('cors')
 const port = 3000
 
 const validateToken = require('./authenticate')
+const stepper = require("./stepper")
 
 const allowedOrigins = ['http://localhost:3000']
 const corsOptions = {
@@ -29,6 +30,7 @@ app.post('/unlock', (req, res) => {
   if (validateToken(token)) {
     console.log("AUTHENTICATED! via web")
     res.json({ status: "unlocking" });
+    stepper.openCloseDoor();
 
   } else {
     console.log("UNAUTHORIZED")

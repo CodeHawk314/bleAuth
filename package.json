@@ -16,6 +16,7 @@
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
     "mcp-spi-adc": "^3.2.0",
+    "onoff": "^6.0.3",
     "rpi-gpio": "^2.1.7"
   }
 }
